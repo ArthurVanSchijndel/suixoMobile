@@ -3,8 +3,31 @@
 
   <head>
     <title>SuixoMobile</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,height=device-height,target-densitydpi=device-dpi,user-scalable=yes" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="arthurvanschijndel" />
+
+    <!-- fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/app/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/app/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/app/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/app/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="assets/app/ico/favico.png">
+    <link rel="shortcut icon" href="assets/app/ico/favico.ico">
+
+    <!-- theme fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300italic,300,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+
+    <!-- theme bootstrap stylesheets -->
+    <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+    <!-- theme dependencies stylesheets -->
+    <link href="assets/app/css/dependencies.css" rel="stylesheet" />
+
+    <!-- theme app main.css (this import of all custom css, you can use requirejs for optimizeCss or grunt to optimize them all) -->
+    <link href="assets/app/css/syrena-admin.css" rel="stylesheet" />
+
     <script type='text/javascript' src='bower_components/amber/support/requirejs/require.min.js'></script>
     <script type='text/javascript' src='bower_components/amber/support/amber.js'></script>
   </head>
@@ -17,16 +40,36 @@
       require([
           'amber/devel',
           'amber-suixomobile/Suixomobile',
-          'amber-suixomobile/Suixomobile-Tests'
+	      'assets/bootstrap/js/bootstrap.min.js',
+	      'assets/isotope/jquery.isotope.min',
+		  'assets/verge/verge.min',
+		  'assets/moment/moment-with-langs.min.js',
+
       ], function (smalltalk) {
           //used for all new packages in IDE
           smalltalk.initialize({
             'transport.defaultAmdNamespace': "amber-suixomobile"
           });
+ 	    // Popup Helios
+		require('amber/helpers').popupHelios();
+		require('amber/helpers').globals.Suixomobile._start()
       });
     </script>
-    <button onclick="require('amber/helpers').globals.Browser._open()">legacy IDE</button>
-    <button onclick="require('amber/helpers').popupHelios()">Helios IDE</button>
+
+    <!-- Bootstrap3 min, required for theme -->
+    <!-- <script src="assets/bootstrap/js/bootstrap.min.js"></script> -->
+    <!-- theme dependencies -->
+    <!-- 
+        Contents List
+        1. Raphaël (drawing on canvas)
+        2. Isotope (magic layout)
+        3. verge (get viewport info)
+        4. Moment (dates)
+        5. Prettify (make code look great)
+    -->
+    <!-- <script src="assets/app/js/dependencies.js"></script> -->
+   <!-- <button onclick="require('amber/helpers').globals.Browser._open()">legacy IDE</button> -->
+   <!-- <button onclick="require('amber/helpers').popupHelios()">Helios IDE</button> -->
   </body>
 
 </html>
