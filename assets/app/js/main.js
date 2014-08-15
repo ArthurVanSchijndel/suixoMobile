@@ -10,7 +10,6 @@
  */
 
 $(function(){
-
 	'use strict';
 	$.extend(verge); // enxtend verge (viewport reader, docs: https://github.com/ryanve/verge) to jquery
 

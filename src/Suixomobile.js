@@ -6,16 +6,63 @@ smalltalk.packages["Suixomobile"].transport = {"type":"amd","amdNamespace":"ambe
 smalltalk.addClass('Suixomobile', globals.Widget, [], 'Suixomobile');
 smalltalk.addMethod(
 smalltalk.method({
+selector: "initVisibilityElms",
+protocol: 'utils',
+fn: function (){
+var self=this;
+return smalltalk.withContext(function($ctx1) { 
+_st(_st(window)._asJQuery())._on_do_("resize",(function(){
+var viewport;
+return smalltalk.withContext(function($ctx2) {
+return self._responsiveSettings();
+}, function($ctx2) {$ctx2.fillBlock({viewport:viewport},$ctx1,1)})}));
+return self}, function($ctx1) {$ctx1.fill(self,"initVisibilityElms",{},globals.Suixomobile)})},
+args: [],
+source: "initVisibilityElms\x0a  window asJQuery on:'resize' do:[|viewport|\x0a   self responsiveSettings.\x0a    ]",
+messageSends: ["on:do:", "asJQuery", "responsiveSettings"],
+referencedClasses: []
+}),
+globals.Suixomobile);
+
+smalltalk.addMethod(
+smalltalk.method({
 selector: "renderBodyScriptsOn:",
 protocol: 'rendering',
 fn: function (html){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
-_st(jQuery)._getScript_("assets/app/js/main.min.js");
+var $1,$2,$3;
+$1="#toggle-content"._asJQuery();
+$ctx1.sendIdx["asJQuery"]=1;
+_st($1)._on_bind_("click",(function(e){
+var content;
+return smalltalk.withContext(function($ctx2) {
+_st(e)._preventDefault();
+$ctx2.sendIdx["preventDefault"]=1;
+content="#content"._asJQuery();
+$ctx2.sendIdx["asJQuery"]=2;
+content;
+return _st(content)._toggleClass_("content-lg");
+$ctx2.sendIdx["toggleClass:"]=1;
+}, function($ctx2) {$ctx2.fillBlock({e:e,content:content},$ctx1,1)})}));
+$ctx1.sendIdx["on:bind:"]=1;
+$2="#toggle-aside"._asJQuery();
+$ctx1.sendIdx["asJQuery"]=3;
+_st($2)._on_bind_("click",(function(e){
+return smalltalk.withContext(function($ctx2) {
+_st(e)._preventDefault();
+$3="#content-main"._asJQuery();
+$ctx2.sendIdx["asJQuery"]=4;
+_st($3)._toggleClass_("content-main-md");
+$ctx2.sendIdx["toggleClass:"]=2;
+return _st("#content-aside"._asJQuery())._toggleClass_("open");
+}, function($ctx2) {$ctx2.fillBlock({e:e},$ctx1,2)})}));
+self._responsiveSettings();
+self._initVisibilityElms();
 return self}, function($ctx1) {$ctx1.fill(self,"renderBodyScriptsOn:",{html:html},globals.Suixomobile)})},
 args: ["html"],
-source: "renderBodyScriptsOn: html\x0a \x22html script src: 'assets/app/js/dependencies.js'.\x22\x0a  jQuery getScript: 'assets/app/js/main.min.js'.\x0a  \x0a  ",
-messageSends: ["getScript:"],
+source: "renderBodyScriptsOn: html\x0a \x22html script src: 'assets/app/js/dependencies.js'\x22\x0a \x22html script src: 'assets/app/js/main.min.js'.\x22\x0a \x22jQuery getScript: 'assets/app/js/main.js'.\x22\x0a  \x0a   ( '#toggle-content' asJQuery)\x0a  \x09on:'click' bind:[:e | |content|\x0a\x09 e preventDefault.\x0a     content := '#content' asJQuery.\x0a\x09 content toggleClass: 'content-lg'.\x0a   ].\x0a   \x0a   ('#toggle-aside' asJQuery)\x0a     on: 'click' bind:[:e| \x0a     e preventDefault.\x0a\x09 ('#content-main' asJQuery) toggleClass: 'content-main-md'.\x0a\x09 ('#content-aside' asJQuery) toggleClass: 'open'.\x0a\x0a    ].\x0a    self responsiveSettings. \x0a\x09self initVisibilityElms. \x0a\x09 \x22Bootstrap manual \x22\x0a   \x09\x22('[data-toggle= _tooltip_]' asJQuery) tooltip. \x22\x0a\x09\x22('[data-toggle= _popover_]' asJQuery) popover.\x22\x0a\x0a    \x22extend verge (viewport reader, docs: https://github.com/ryanve/verge) to jquery\x22\x0a \x09\x22jQuery extend: verge .\x22\x0a \x09\x0a   \x0a  ",
+messageSends: ["on:bind:", "asJQuery", "preventDefault", "toggleClass:", "responsiveSettings", "initVisibilityElms"],
 referencedClasses: []
 }),
 globals.Suixomobile);
@@ -570,6 +617,57 @@ return self}, function($ctx1) {$ctx1.fill(self,"replaceWithJQuery:",{aJQuery:aJQ
 args: ["aJQuery"],
 source: "replaceWithJQuery: aJQuery\x0a  aJQuery empty.\x0a  self appendToJQuery: aJQuery.\x0a ",
 messageSends: ["empty", "appendToJQuery:"],
+referencedClasses: []
+}),
+globals.Suixomobile);
+
+smalltalk.addMethod(
+smalltalk.method({
+selector: "responsiveSettings",
+protocol: 'utils',
+fn: function (){
+var self=this;
+var viewport;
+return smalltalk.withContext(function($ctx1) { 
+var $1,$4,$3,$2,$5,$6,$7,$8,$9,$10;
+viewport=_st(_st(window)._verge())._viewportW();
+$1=_st(viewport).__gt_eq((1680));
+if(smalltalk.assert($1)){
+$4=".content-aside"._asJQuery();
+$ctx1.sendIdx["asJQuery"]=1;
+$3=_st($4)._length();
+$2=_st($3).__gt((0));
+if(smalltalk.assert($2)){
+$5=".content-main"._asJQuery();
+$ctx1.sendIdx["asJQuery"]=2;
+_st($5)._addClass_("content-main-md");
+$ctx1.sendIdx["addClass:"]=1;
+};
+$6=".content-aside"._asJQuery();
+$ctx1.sendIdx["asJQuery"]=3;
+_st($6)._addClass_("open");
+$ctx1.sendIdx["addClass:"]=2;
+} else {
+$7=".content-main"._asJQuery();
+$ctx1.sendIdx["asJQuery"]=4;
+_st($7)._removeClass_("content-main-md");
+$ctx1.sendIdx["removeClass:"]=1;
+$8=".content-aside"._asJQuery();
+$ctx1.sendIdx["asJQuery"]=5;
+_st($8)._removeClass_("open");
+};
+$9=_st(viewport).__lt_eq((768));
+if(smalltalk.assert($9)){
+$10=".content"._asJQuery();
+$ctx1.sendIdx["asJQuery"]=6;
+_st($10)._addClass_("content-lg");
+$ctx1.sendIdx["addClass:"]=3;
+_st(".toggle-search"._asJQuery())._addClass_("hide");
+};
+return self}, function($ctx1) {$ctx1.fill(self,"responsiveSettings",{viewport:viewport},globals.Suixomobile)})},
+args: [],
+source: "responsiveSettings\x0a|viewport|\x0a   viewport := window verge viewportW.\x0a\x0a   \x22large desktop\x22\x0a   (viewport >= 1680)\x0a   \x09 ifTrue: [\x0a\x09\x09 (('.content-aside' asJQuery) length > 0)\x0a\x09\x09 \x09ifTrue:[\x0a\x09\x09     '.content-main' asJQuery addClass:'content-main-md'.\x0a\x09\x09 \x09].\x0a\x09\x09  '.content-aside' asJQuery addClass: 'open'.\x09\x0a\x09\x09 ]\x0a\x09 ifFalse:[\x0a\x09\x09'.content-main' asJQuery removeClass:'content-main-md'.\x0a\x09\x09'.content-aside' asJQuery removeClass:'open'.\x0a\x09   ].\x0a     ( viewport <= 768) ifTrue:[\x0a\x09    '.content' asJQuery addClass: 'content-lg'.\x0a\x09\x09'.toggle-search' asJQuery addClass:'hide'.\x0a\x09  ]\x0a    ",
+messageSends: ["viewportW", "verge", "ifTrue:ifFalse:", ">=", "ifTrue:", ">", "length", "asJQuery", "addClass:", "removeClass:", "<="],
 referencedClasses: []
 }),
 globals.Suixomobile);

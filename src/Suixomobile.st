@@ -6,8 +6,32 @@ Widget subclass: #Suixomobile
 !Suixomobile methodsFor: 'rendering'!
 
 renderBodyScriptsOn: html
- "html script src: 'assets/app/js/dependencies.js'."
-  jQuery getScript: 'assets/app/js/main.min.js'.
+ "html script src: 'assets/app/js/dependencies.js'"
+ "html script src: 'assets/app/js/main.min.js'."
+ "jQuery getScript: 'assets/app/js/main.js'."
+  
+   ( '#toggle-content' asJQuery)
+  	on:'click' bind:[:e | |content|
+	 e preventDefault.
+     content := '#content' asJQuery.
+	 content toggleClass: 'content-lg'.
+   ].
+   
+   ('#toggle-aside' asJQuery)
+     on: 'click' bind:[:e| 
+     e preventDefault.
+	 ('#content-main' asJQuery) toggleClass: 'content-main-md'.
+	 ('#content-aside' asJQuery) toggleClass: 'open'.
+
+    ].
+    self responsiveSettings. 
+	self initVisibilityElms. 
+	 "Bootstrap manual "
+   	"('[data-toggle= _tooltip_]' asJQuery) tooltip. "
+	"('[data-toggle= _popover_]' asJQuery) popover."
+
+    "extend verge (viewport reader, docs: https://github.com/ryanve/verge) to jquery"
+ 	"jQuery extend: verge ."
 !
 
 renderContentHeaderAlertsOn: html
@@ -170,9 +194,38 @@ renderSideLeftOn: html
 
 !Suixomobile methodsFor: 'utils'!
 
+initVisibilityElms
+  window asJQuery on:'resize' do:[|viewport|
+   self responsiveSettings.
+    ]
+!
+
 replaceWithJQuery: aJQuery
   aJQuery empty.
   self appendToJQuery: aJQuery.
+!
+
+responsiveSettings
+|viewport|
+   viewport := window verge viewportW.
+
+   "large desktop"
+   (viewport >= 1680)
+   	 ifTrue: [
+		 (('.content-aside' asJQuery) length > 0)
+		 	ifTrue:[
+		     '.content-main' asJQuery addClass:'content-main-md'.
+		 	].
+		  '.content-aside' asJQuery addClass: 'open'.	
+		 ]
+	 ifFalse:[
+		'.content-main' asJQuery removeClass:'content-main-md'.
+		'.content-aside' asJQuery removeClass:'open'.
+	   ].
+     ( viewport <= 768) ifTrue:[
+	    '.content' asJQuery addClass: 'content-lg'.
+		'.toggle-search' asJQuery addClass:'hide'.
+	  ]
 ! !
 
 !Suixomobile class methodsFor: 'as yet unclassified'!
